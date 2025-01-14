@@ -1,0 +1,18 @@
+
+
+
+
+
+Ex 2 -->
+@Composable
+internal fun App() = AppTheme {
+    Column(modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center)
+    {
+        Text("This is a resource string")
+        Image(painter = painterResource(Res.drawable.generatedFace),"",
+            modifier = Modifier.size(150.dp))
+
+    }
+}
