@@ -16,3 +16,40 @@ internal fun App() = AppTheme {
 
     }
 }
+
+Ex 3 -->
+@Composable
+internal fun App() = AppTheme {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center)
+    {
+        Image(
+            painter = painterResource(Res.drawable.generatedFace), "",
+            modifier = Modifier
+                .size(160.dp)
+                .clip(CircleShape)
+                .border(width = 1.dp, color = Color.Black, shape = CircleShape),
+            contentScale = ContentScale.Crop)
+
+        data class Contact(val fullName: String, val email: String, val phone: String)
+        val contact = Contact("Marta Casserres", "marta@example.com", "934578484")
+        Text(text = contact.fullName, fontWeight = FontWeight.Bold, fontSize = 30.sp)
+
+        ContactInfo(contact.email,  contact.phone)
+    }
+}
+
+@Composable
+fun ContactInfo(email: String, phone: String) {
+    Column(
+        modifier = Modifier
+            .background(Color.LightGray, shape = MaterialTheme.shapes.medium)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally)
+    {
+        Text(text = email, fontSize = 16.sp)
+        Text(text = phone, fontSize = 16.sp)
+    }
+}
