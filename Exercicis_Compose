@@ -53,3 +53,55 @@ fun ContactInfo(email: String, phone: String) {
         Text(text = phone, fontSize = 16.sp)
     }
 }
+
+Ex 4 -->
+@Composable
+internal fun App() = AppTheme {
+
+    data class Message(val author: String, val body: String)
+
+    val names = listOf(
+        "Ellison Curry",
+        "Briggs Willis",
+        "Alexa Murphy",
+        "Cameron Berry",
+        "Annabelle Villarreal",
+        "Nikolai Wiley",
+        "Lauryn Morrow",
+        "Kyree Hardy",
+        "Jessica Lang",
+        "Wells Wilson",
+        "Luna Foster",
+        "Kayden Taylor",
+        "Sofia Mann",
+        "Nehemiah Randall",
+        "Christina Gordon",
+        "Karter Kramer",
+        "Hanna Morales",
+        "Aaron Velez",
+        "Megan Delarosa",
+        "Osiris Johnson",
+        "Emma Atkins",
+        "Cason McKee",
+        "Kori Walls",
+        "Larry Shepherd",
+    )
+    val body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac vestibulum nunc."
+    val messages = List(100){
+        Message(names.random(), body)
+    }
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center)
+    {
+        messages.forEach {message ->
+            item {
+                Column (modifier = Modifier.width(300.dp).clip(shape = RoundedCornerShape(8.dp)).background(Color.LightGray).padding(8.dp)) {
+                    Text(message.author, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(message.body)
+                }
+            }
+        }
+    }
+}
