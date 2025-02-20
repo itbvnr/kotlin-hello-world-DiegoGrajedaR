@@ -105,3 +105,156 @@ internal fun App() = AppTheme {
         }
     }
 }
+
+EX 5: GoodMorningAndNight
+
+    var text = remember { mutableStateOf("Good ?!") }
+    Button(onClick = {
+        text.value = "Good Night!"
+    }) {
+        Text(text.value)
+    }
+
+    Button(onClick = {
+        text.value = "Good Morning!"
+    }) {
+        Text(text.value)
+    }
+
+
+    var startText by remember { mutableStateOf("Good ?!") }
+
+    Column(
+        modifier = Modifier.padding(16.dp))
+
+        {
+            Text(
+                text = startText,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    ClickButton(text = "Morning") {
+                        startText = "Good Morning!"
+                    }
+                    ClickButton(text = "Night") {
+                        startText = "Good Night!"
+                    }
+                }
+        }
+}
+    @Composable
+    fun ClickButton(text: String, onClick: () -> Unit) {
+        Button(
+            onClick = onClick,
+            shape = RoundedCornerShape (30)
+        )
+        {
+            Text(
+                text = text,
+                color = Color.White,
+            )
+        }
+    } 
+
+
+EX6: SayHelloScreen
+
+    Column(modifier = Modifier.padding(16.dp)) {
+
+        var textName by remember { mutableStateOf("") }
+        TextField(
+            textName,
+            label = { Text("Name") },
+            onValueChange = {
+                textName = it
+            })
+
+        val scope = rememberCoroutineScope()
+        val snackbarHostState = remember { SnackbarHostState() }
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
+        ) { padding ->
+            Button(modifier = Modifier.padding(padding), onClick = {
+                scope.launch {
+                    snackbarHostState.showSnackbar("HELLO " + textName)
+                }
+            }) {
+                Text("Say hello")
+            }
+        }
+    }
+EX7: SecretNumber
+
+
+    var secretNumber by remember { mutableStateOf(Random.nextInt(0, 100))}
+    var userInput by remember { mutableStateOf("")}
+    var finalMessage by remember { mutableStateOf("") }
+    var counter by remember { mutableStateOf(0)}
+
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,)
+    {
+        Text(
+            text = "Endevina el número secret",
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        TextField(
+            userInput,
+            label = { Text("") },
+            onValueChange = {
+                userInput = it
+            })
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                val userNumber = userInput.toIntOrNull()
+                var triesCounter = counter
+                if (userNumber != null)
+                {
+                    if (userNumber > secretNumber) {
+                        finalMessage = "El número que busques és més petit"
+                        counter = triesCounter + 1
+                    }
+                    else if (userNumber < secretNumber) {
+                        finalMessage = "El número que busques és més gran"
+                        counter = triesCounter + 1
+                    }
+                    else {
+                        finalMessage = "Has encertat!"
+                    }
+                }
+                else{
+                    finalMessage = "Si us plau, introdueix un número vàlid"
+                    }
+                },)
+            {
+                Text(text = "Validar")
+            }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = finalMessage,
+            style = TextStyle(fontWeight = FontWeight.Bold)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Intents: " + counter.toString(),
+        )
+
+    }
+
+
